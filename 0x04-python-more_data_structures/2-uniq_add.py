@@ -6,5 +6,5 @@ def uniq_add(my_list=[]):
     result = 0
     for n in list:
         result += n
-    return result
+        return result
 
