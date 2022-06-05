@@ -1,21 +1,17 @@
 #!/usr/bin/python3
 """sends a resquest to the url and displays the value of the x-request-id"""
 import requests
-from sys import argv
+import sys
+
 if __name__ == "__main__":
-    if len(argv) > 1:
-        q = argv[1]
-    else:
-        q = ""
+    user = sys.argv[1]
+    passw = sys.argv[2]
+    url = 'https://api.github.com/users/{}'.format(user)
+
+    r = requests.get(url, auth=(user, passw))
 
     try:
-        _data = {'q': q}
-        url = 'http://0.0.0.0:5000/search_user'
-        req = requests.post(url, _data).json()
-        if not req:
-            print("No result")
-        else:
-            print("[{}] {}".format(req.get('id'), req.get('name')))
-    except ValueError:
-        print("Not a valid JSON")
+        print(r.json()['id'])
+    except KeyError:
+        print("None")
 

@@ -1,15 +1,13 @@
 #!/usr/bin/python3
-from sys import argv
-from urllib.request import Request, urlopen
-from urllib.parse import urlencode
-from urllib.error import HTTPError
+"""  using Except in request """
 
+import urllib.request
+from sys import argv
 
 if __name__ == "__main__":
-    req = Request(argv[1])
-
     try:
-        with urlopen(req) as res:
-            print(res.read().decode('utf-8'))
-    except HTTPError as ex:
-        print('Error code:', ex.code)
+        with urllib.request.urlopen(argv[1]) as response:
+            html = response.read().decode("UTF-8")
+            print(html)
+    except urllib.error.HTTPError as e:
+        print("Error code: {}".format(e.code))
