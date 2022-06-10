@@ -1,10 +1,17 @@
 #!/usr/bin/python3
-# 6-from_json_string.py
-# Brennan D Baraban <375@holbertonschool.com>
-"""Defines a JSON-to-object function."""
-import json
+'''A module containing IO functions.
+'''
+from json import JSONDecoder
 
 
 def from_json_string(my_str):
-    """Return the Python object representation of a JSON string."""
-    return json.loads(my_str)
+    '''Creates an object from its JSON representation.
+
+    Args:
+        my_str (str): A JSON representation of an object.
+
+    Returns:
+        any: An object corresponding to the given JSON string,
+        otherwise an exception is thrown.
+    '''
+    return JSONDecoder().decode(my_str)

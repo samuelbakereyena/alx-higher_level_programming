@@ -1,23 +1,24 @@
 #!/usr/bin/python3
-# 11-student.py
-# Brennan D Baraban <375@holbertonschool.com>
-"""Defines a class Student."""
+'''A module for managing students.
+'''
 
 
 class Student:
-    """Represent a student."""
-
+    '''Represents a student.
+    '''
     def __init__(self, first_name, last_name, age):
-        """Initialize a new Student.
-        Args:
-            first_name (str): The first name of the student.
-            last_name (str): The last name of the student.
-            age (int): The age of the student.
-        """
+        '''Initializes this student with the given first name,
+        last name, and age.
+        '''
         self.first_name = first_name
         self.last_name = last_name
         self.age = age
 
     def to_json(self):
-        """Get a dictionary representation of the Student."""
-        return self.__dict__
+        '''Retrieves a dictionary of this student's attributes.
+
+        Returns:
+            dict: A dictionary of this student's attributes.
+        '''
+        if '__dict__' in dir(self):
+            return self.__dict__
