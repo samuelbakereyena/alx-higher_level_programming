@@ -1,119 +1,202 @@
-The ``7-base_geometry`` module
-============================
+'''
+# Import the required class
+>>> from importlib import import_module
+>>> BaseGeometry = import_module('7-base_geometry').BaseGeometry
 
-Using ``BaseGeometry``
----------------------
+>>> class TestInt(int):
+...     pass
+>>> g = BaseGeometry()
+>>> type(g)
+<class '7-base_geometry.BaseGeometry'>
+>>> g.__class__.__name__
+'BaseGeometry'
+>>> 'integer_validator' in dir(g)
+True
+>>> 'area' in dir(g)
+True
+>>> type(g.integer_validator)
+<class 'method'>
+>>> type(g.area)
+<class 'method'>
+>>> g.integer_validator('foo', 2)
+>>> g.integer_validator('foo', 278)
+>>> g.integer_validator('foo', int('278'))
+>>> g.integer_validator('foo', int('bead', 16))
+>>> g.integer_validator(b'foo', 278)
+>>> g.integer_validator(0x666f6f, 278)
+>>> g.integer_validator([0x666f6f], 278)
 
-Import function from module:
-    >>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+>>> try:
+...     g = BaseGeometry()
+...     g.area()
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[Exception] area() is not implemented
+>>> try:
+...     g = BaseGeometry()
+...     g.area(7)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] area() takes 1 positional argument but 2 were given
+>>> try:
+...     g = BaseGeometry()
+...     g.area(g)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] area() takes 1 positional argument but 2 were given
+>>> try:
+...     g = BaseGeometry()
+...     g.area(None)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] area() takes 1 positional argument but 2 were given
 
-Correct Class Type test:
-    >>> bg = BaseGeometry()
-    >>> type(bg) == BaseGeometry
-    True
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('size', None)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] size must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator(None, None)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] unsupported format string passed to NoneType.__format__
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('height', int)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] height must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', '23')
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] foo must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', True)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] foo must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', False)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] foo must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', b'2')
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] foo must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', 2.7)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] foo must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', 2.0)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] foo must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', float('inf'))
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] foo must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', float('-inf'))
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] foo must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', float('nan'))
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] foo must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', [5])
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] foo must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     n = TestInt(34)
+...     g.integer_validator('foo', n)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] foo must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', g)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] foo must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('angle', complex(2, 3))
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] angle must be an integer
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('angle', 0.0)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] angle must be an integer
 
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', 0)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[ValueError] foo must be greater than 0
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', -12)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[ValueError] foo must be greater than 0
 
-area() instance method
-----------------------
-area method is an instance method:
-    >>> type(BaseGeometry.__dict__['area'])
-    <class 'function'>
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo')
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] integer_validator() missing 1 required positional argument: 'value'
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator()
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] integer_validator() missing 2 required positional arguments: 'name' and 'value'
+>>> try:
+...     g = BaseGeometry()
+...     g.integer_validator('foo', 2, 5)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] integer_validator() takes 3 positional arguments but 4 were given
+>>> try:
+...     g = BaseGeometry(7)
+...     g.integer_validator('foo', 5)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] BaseGeometry() takes no arguments
+>>> try:
+...     g = BaseGeometry(None)
+...     g.integer_validator('foo', 5)
+... except Exception as ex:
+...     print('[{}] {}'.format(ex.__class__.__name__, ex.args[0]))
+[TypeError] BaseGeometry() takes no arguments
 
-area method called via class with no args:
-    >>> bg.__class__.area()
-    Traceback (most recent call last):
-    TypeError: area() missing 1 required positional argument: 'self'
-
-area method args test (1 arg):
-    >>> bg.area(10)
-    Traceback (most recent call last):
-    TypeError: area() takes 1 positional argument but 2 were given
-
-area method normal test:
-    >>> bg.area()
-    Traceback (most recent call last):
-    Exception: area() is not implemented
-
-
-integer_validator() instance method
------------------------------------
-integer_validator is an instance method:
-    >>> type(BaseGeometry.__dict__['integer_validator'])
-    <class 'function'>
-
-integer_validator method called via class with no args:
-    >>> bg.__class__.integer_validator()
-    Traceback (most recent call last):
-    TypeError: integer_validator() missing 3 required positional arguments: 'self', 'name', and 'value'
-
-integer_validator method arg test (0 args):
-    >>> bg.integer_validator()
-    Traceback (most recent call last):
-    TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
-    
-integer_validator method arg test (3 args):
-    >>> bg.integer_validator(1, 1, 1)
-    Traceback (most recent call last):
-    TypeError: integer_validator() takes 3 positional arguments but 4 were given
-
-integer_validator method float.0 value:
-    >>> bg.integer_validator("foo", 3.0)
-    Traceback (most recent call last):
-    TypeError: foo must be an integer
-
-integer_validator method float.x value:
-    >>> bg.integer_validator("arg", 3.14)
-    Traceback (most recent call last):
-    TypeError: arg must be an integer
-
-integer_validator method string value:
-    >>> bg.integer_validator("Bar", "bar")
-    Traceback (most recent call last):
-    TypeError: Bar must be an integer
-
-integer_validator method bool value:
-    >>> bg.integer_validator("zar", True)
-    Traceback (most recent call last):
-    TypeError: zar must be an integer
-
-integer_validator method list value:
-    >>> bg.integer_validator("a", [1])
-    Traceback (most recent call last):
-    TypeError: a must be an integer
-
-integer_validator method None value:
-    >>> bg.integer_validator("foo", None)
-    Traceback (most recent call last):
-    TypeError: foo must be an integer
-
-integer_validator method 0 value:
-    >>> bg.integer_validator("key", 0)
-    Traceback (most recent call last):
-    ValueError: key must be greater than 0
-
-integer_validator method negative value:
-    >>> bg.integer_validator("key", -1000)
-    Traceback (most recent call last):
-    ValueError: key must be greater than 0
-
-integer_validator method ok value:
-    >>> bg.integer_validator("key", 98)
-    
-integer_validator method ok value 2:
-    >>> bg.integer_validator("key", 1)
-
-integer_validator method empty string:
-    >>> bg.integer_validator("", 1)
-
-integer_validator method empty string:
-    >>> bg.integer_validator(None, 1)
-
-integer_validator method tuple:
-    >>> bg.integer_validator("Foo", (1, 2))
-    Traceback (most recent call last):
-    TypeError: Foo must be an integer
-
-integer_validator method dic:
-    >>> bg.integer_validator("Foo", {1, 2})
-    Traceback (most recent call last):
-    TypeError: Foo must be an integer
+'''
