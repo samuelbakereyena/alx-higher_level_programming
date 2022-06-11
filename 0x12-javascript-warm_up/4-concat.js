@@ -1,4 +1,5 @@
 #!/usr/bin/node
-const args = process.argv.slice(2);
-const frase = args[0] + ' is ' + args[1];
-console.log(frase);
+const arg0 = process.argv[2];
+const arg1 = process.argv[3];
+
+console.log(arg0 + ' is ' + arg1);

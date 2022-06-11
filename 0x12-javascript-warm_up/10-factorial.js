@@ -1,15 +1,16 @@
 #!/usr/bin/node
-function factorial (a) {
-  if (a === 1) {
+/**
+ * factorial - Computes the factorial of a number.
+ * @param {Number} num - The number.
+ *
+ * @returns The factorial of the number.
+ */
+function factorial (num) {
+  if (Number.isNaN(num) || (num <= 0)) {
     return 1;
   } else {
-    return factorial(a - 1) * a;
+    return num * factorial(num - 1);
   }
 }
 
-const args = process.argv.slice(2);
-if (args[0] === undefined || isNaN(Number(args[0], 10))) {
-  console.log(1);
-} else {
-  console.log(factorial(Number(args[0], 10)));
-}
+console.log(factorial(Number.parseInt(process.argv[2])));

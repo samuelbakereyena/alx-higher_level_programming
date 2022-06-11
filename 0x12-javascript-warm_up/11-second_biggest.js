@@ -1,15 +1,8 @@
 #!/usr/bin/node
-const args = process.argv.slice(2);
-const arrayNumbers = [];
-let i;
+const args = process.argv
+  .slice(2)
+  .map(arg => Number.parseInt(arg))
+  .sort((a, b) => b - a);
+const val = args.length < 2 ? 0 : args[1];
 
-if (args[0] === undefined || args.length === 1 || isNaN(Number(args[0], 10))) {
-  console.log(0);
-} else {
-  for (i = 0; i < args.length; i++) {
-    arrayNumbers.push(Number(args[i], 10));
-  }
-  arrayNumbers.sort();
-  arrayNumbers.reverse();
-  console.log(arrayNumbers[1]);
-}
+console.log(val);
