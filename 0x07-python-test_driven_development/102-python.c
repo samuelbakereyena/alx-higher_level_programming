@@ -1,27 +1,43 @@
-#include <Python.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <python3.4/Python.h>
+#include <python3.4/object.h>
+#include <python3.4/unicodeobject.h>
+#define PY_SSIZE_T_CLEAN
 
 /**
- * print_python_string - prints a python string in C
- *
- * @p: the PyUnicode Object
+ * print_python_string - Prints some basic info about a Python string object
+ * @p: A pointer to the Python string object
  */
-
 void print_python_string(PyObject *p)
 {
-	fflush(stdout);
+	Py_ssize_t str_len;
+	Py_UNICODE *str = NULL;
+	char *fmt_str = "  value: %ls\n";
 
+	fflush(stdout);
 	printf("[.] string object info\n");
-	if PyUnicode_CheckExact(p)
+	fflush(stdout);
+	if ((p != NULL) && (p->ob_type != NULL)
+		&& ((p->ob_type)->tp_name != NULL)
+		&& (strcmp((p->ob_type)->tp_name, "str") == 0))
 	{
-		printf("  type: ");
-		if (PyUnicode_IS_COMPACT_ASCII(p))
-			printf("compact ascii\n");
-		else
-			printf("compact unicode object\n");
-		printf("  length: %zd\n", PyUnicode_GetLength(p));
-		printf("  value: %ls\n", PyUnicode_AsWideCharString(p, NULL));
+		str = PyUnicode_AsWideCharString(p, &str_len);
+		printf("  type: %s%s\n",
+			   ((PyASCIIObject *)p)->state.compact ? "compact " : "",
+			   ((PyASCIIObject *)p)->state.ascii ? "ascii" : "unicode object");
+		fflush(stdout);
+		printf("  length: %d\n", (int)str_len);
+		fflush(stdout);
+		printf(fmt_str, str);
+		fflush(stdout);
+		PyMem_Free(str);
 	}
 	else
+	{
 		printf("  [ERROR] Invalid String Object\n");
+		fflush(stdout);
+	}
 }
