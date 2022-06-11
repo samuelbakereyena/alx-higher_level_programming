@@ -1,2 +1,4 @@
--- Update table  record
-UPDATE `second_table` SET `score` = '10' WHERE `second_table`.`name` = 'Bob';
+-- Changes records in a table in the database
+UPDATE second_table
+    SET score = 10
+    WHERE name = 'Bob';
