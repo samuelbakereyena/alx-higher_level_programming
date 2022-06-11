@@ -1,7 +1,9 @@
 #!/usr/bin/python3
-"""LockedClass module."""
+'''A module containing a class with restrictions.
+'''
 
 
 class LockedClass:
-    """LockedClass class containing only __slots__."""
+    '''Represents a class with restricted attribute modification.
+    '''
     __slots__ = ['first_name']
