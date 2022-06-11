@@ -1,9 +1,16 @@
 #!/usr/bin/python3
 def divisible_by_2(my_list=[]):
-    new_list = []
-    for i in range(len(my_list)):
-        if my_list[i] % 2 == 0:
-            new_list.append(True)
-        else:
-            new_list.append(False)
-    return new_list
+    '''
+    Finds all multiples of 2 in a list
+
+    Parameters:
+    my_list (list): The list of integers
+
+    Return:
+    A list of bools specifying the divisibility of the number with 2
+    at the same position in the given list
+    '''
+    res = []
+    for num in my_list:
+        res.append(num % 2 == 0)
+    return res

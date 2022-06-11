@@ -1,72 +1,49 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "lists.h"
 
 /**
- * reverse_listint - reverses a linked list
- * @head: pointer to the first node in the list
+ * is_palindrome - Checks if a linked list is a palindrome
+ * @head: The pointer to the head of the linked list
  *
- * Return: pointer to the first node in the new list
- */
-void reverse_listint(listint_t **head)
-{
-  listint_t *prev = NULL;
-  listint_t *current = *head;
-  listint_t *next = NULL;
-
-  while (current)
-    {
-      next = current->next;
-      current->next = prev;
-      prev = current;
-      current = next;
-    }
-
-  *head = prev;
-}
-
-/**
- * is_palindrome - checks if a linked list is a palindrome
- * @head: double pointer to the linked list
- *
- * Return: 1 if it is, 0 if not
+ * Return: 1 if the linked list is a palindrome, otherwise 0
  */
 int is_palindrome(listint_t **head)
 {
-  listint_t *slow = *head, *fast = *head, *temp = *head, *dup = NULL;
+	int len = 0, i = 0, stop = 0, res = 1;
+	listint_t *node0, *node1 = NULL, *next = NULL, *tmp = NULL, *prev = NULL;
 
-  if (*head == NULL || (*head)->next == NULL)
-    return (1);
-
-  while (1)
-    {
-      fast = fast->next->next;
-      if (!fast)
+	if ((head != NULL) && (*head != NULL))
 	{
-	  dup = slow->next;
-	  break;
+		node0 = *head;
+		while (node0 != NULL)
+			node0 = node0->next, len++;
+		node0 = *head, node1 = *head;
+		while ((i < len) && !stop)
+		{
+			if (i >= (len / 2))
+			{
+				next = (i == len / 2 ? node1 : next);
+				if ((len % 2 != 0) && (i == len / 2))
+				{
+					node1 = node1->next, i++;
+					continue;
+				}
+				if (node0->n != node1->n)
+					res = 0, stop = 1;
+				if (node0->n == node1->n)
+					node0 = node0->next, node1 = node1->next, i++;
+			}
+			else
+			{
+				node1 = node1->next;
+				next = node0->next, node0->next = prev, prev = node0;
+				node0 = ((i < (len / 2 - 1)) ? next : node0), tmp = node0;
+				i++;
+			}
+		}
+		for (i = 0; i < (len / 2); i++)
+			next = i == 0 ? next : prev, prev = tmp, tmp = tmp->next, prev->next = next;
 	}
-      if (!fast->next)
-	{
-	  dup = slow->next->next;
-	  break;
-	}
-      slow = slow->next;
-    }
-
-  reverse_listint(&dup);
-
-  while (dup && temp)
-    {
-      if (temp->n == dup->n)
-	{
-	  dup = dup->next;
-	  temp = temp->next;
-	}
-      else
-	return (0);
-    }
-
-  if (!dup)
-    return (1);
-
-  return (0);
+	return (res);
 }
