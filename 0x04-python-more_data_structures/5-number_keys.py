@@ -1,10 +1,15 @@
 #!/usr/bin/python3
 def number_keys(a_dictionary):
-    if a_dictionary is None:
+    '''
+    Computes the number of keys in a dictionary
+
+    Parameters:
+    a_dictionary (dict): A dictionary
+
+    Returns:
+    The number of keys in the given dictionary
+    '''
+    if a_dictionary is not None:
+        return len(a_dictionary.keys())
+    else:
         return 0
-    return (len(a_dictionary))
-    #number_keys = 0
-    #for i in enumerate(dict):
-   #     number_keys += 1
-    #    return count
-    #print(number_keys(a_dictionary))
