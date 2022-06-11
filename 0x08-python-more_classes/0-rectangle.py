@@ -1,12 +1,9 @@
 #!/usr/bin/python3
-"""Rectangle module.
-
-This module contains a class that defines a rectangle.
-
+"""A module for working with rectangles.
 """
 
 
-class Rectangle():
-    """Defines a rectangle."""
-
+class Rectangle:
+    """Represents a 2D Polygon with 4 perpendicular sides.
+    """
     pass
