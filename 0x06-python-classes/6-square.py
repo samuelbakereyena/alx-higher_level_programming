@@ -1,67 +1,88 @@
 #!/usr/bin/python3
-"""Square module.
-
-This module contains a class that defines a square and its size and its
-position on the screen, checking if the given values are right, and a setter
-and getter methods to set or get them. There's also an area method that returns
-the area of the square, another one that handles the print of the square.
-
-"""
+'''A module for working with squares.
+'''
 
 
-class Square():
-    """Defines a square."""
-
+class Square:
+    '''Represents a 2D Polygon with 4 equal and perpendicular sides.
+    '''
     def __init__(self, size=0, position=(0, 0)):
-        """Sets the necessary attributes for the Square object.
+        '''Initializes a Square with a given size.
 
         Args:
-            size (int): the size of one edge of the square.
-            position (tuple): the coordinates of the square.
-        """
+            size (int): The size of the square.
+            position (tuple): The position of the square.
+        '''
         self.size = size
         self.position = position
 
     @property
     def size(self):
-        """Get or set the size of the square."""
-        return self.__size
+        '''Retrieves the size of this Square.
 
-    @size.setter
-    def size(self, value):
-        if type(value) is int:
-            if value >= 0:
-                self.__size = value
-            else:
-                raise ValueError("size must be >= 0")
-        else:
-            raise TypeError("size must be an integer")
+        Returns:
+            int: The size of this Square.
+        '''
+        return self.__size
 
     @property
     def position(self):
-        """Get or set the position of the square."""
+        '''Retrieves the position of this Square.
+
+        Returns:
+            tuple: The position of this Square.
+        '''
         return self.__position
+
+    @size.setter
+    def size(self, value):
+        '''Updates the size of this Square.
+
+        Args:
+            value (int): The new size of this Square.
+        '''
+        if not isinstance(value, int):
+            raise TypeError('size must be an integer')
+        else:
+            if value < 0:
+                raise ValueError('size must be >= 0')
+            else:
+                self.__size = value
 
     @position.setter
     def position(self, value):
-        if type(value) is tuple and len(value) is 2 and \
-            type(value[0]) is int and type(value[1]) is int and \
-                value[0] >= 0 and value[1] >= 0:
-            self.__position = value
+        '''Updates the position of this Square.
+
+        Args:
+            value (tuple): The new position of this Square.
+        '''
+        is_invalid_value = True
+        error_msg = 'position must be a tuple of 2 positive integers'
+        if isinstance(value, tuple):
+            if len(value) == 2:
+                if isinstance(value[0], int) and isinstance(value[1], int):
+                    if value[0] >= 0 and value[1] >= 0:
+                        is_invalid_value = False
+        if is_invalid_value:
+            raise TypeError(error_msg)
         else:
-            raise TypeError("position must be a tuple of 2 positive integers")
+            self.__position = value
 
     def area(self):
-        """Returns the current square area."""
-        return self.__size ** 2
+        '''Computes the area of this Square.
+
+        Returns:
+            int: The area of this Square.
+        '''
+        return self.size ** 2
 
     def my_print(self):
-        """Prints the square with the # character on stdout."""
-        if self.__size > 0:
-            for y in range(self.__position[1]):
-                print()
-            for x in range(self.__size):
-                print(' ' * self.__position[0], end='')
-                print('#' * self.__size)
+        '''Prints a 2D table of the '#' symbol with the size of this square
+        based on its position.
+        '''
+        if self.size == 0:
+            print('')
         else:
-            print()
+            print('{}'.format('\n' * self.position[1]), end='')
+            for i in range(self.size):
+                print('{}{}'.format(' ' * self.position[0], '#' * self.size))

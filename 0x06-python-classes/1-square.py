@@ -1,19 +1,16 @@
 #!/usr/bin/python3
-"""Square module.
-
-This module contains a class that defines a square and init method that
-sets its size.
-
+"""A module for working with squares.
 """
 
 
-class Square():
-    """Defines a square."""
-
+class Square:
+    """Represents a 2D Polygon with 4 equal and perpendicular sides.
+    """
     def __init__(self, size):
-        """Sets the necessary attributes for the Square object.
+        """Initializes a Square with a given size.
 
         Args:
-            size (int): the size of one edge of the square.
+            size (int): The size of the square.
         """
+        super().__init__()
         self.__size = size

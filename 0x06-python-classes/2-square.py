@@ -1,29 +1,22 @@
 #!/usr/bin/python3
-"""Square module.
-
-This module contains a class that defines a square and init method that
-sets its size and checking if the given values are right.
-
+"""A module for working with squares.
 """
 
 
-class Square():
-    """Defines a square."""
-
+class Square:
+    """Represents a 2D Polygon with 4 equal and perpendicular sides.
+    """
     def __init__(self, size=0):
-        """Sets the necessary attributes for the Square object.
+        """Initializes a Square with a given size.
 
         Args:
-            size (int): the size of one edge of the square.
-
-        Raises:
-            TypeError: if size is not given as an integer.
-            ValueError: if size is less than 0.
+            size (int): The size of the square.
         """
-        if type(size) is int:
-            if size >= 0:
-                self.__size = size
-            else:
-                raise ValueError("size must be >= 0")
+        super().__init__()
+        if not isinstance(size, int):
+            raise TypeError('size must be an integer')
         else:
-            raise TypeError("size must be an integer")
+            if size < 0:
+                raise ValueError('size must be >= 0')
+            else:
+                self.__size = size
