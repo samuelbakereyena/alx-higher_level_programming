@@ -1,22 +1,32 @@
 #!/usr/bin/python3
+'''Adds a State object to a database.
 '''
-Adds the State object “Louisiana” to the database hbtn_0e_6_usa
-'''
-
-from sys import argv
+import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from model_state import State
+
+from model_state import Base, State
 
 
-if __name__ == "__main__":
-    engine = create_engine("mysql+mysqldb://{}:{}@localhost/{}"
-                           .format(argv[1], argv[2], argv[3]))
-    InstanceSession = sessionmaker(bind=engine)
-    session = InstanceSession()
-
-    state = State(name="Louisiana")
-    session.add(state)
-    session.commit()
-    print(state.id)
-    session.close()
+if __name__ == '__main__':
+    if len(sys.argv) >= 4:
+        user = sys.argv[1]
+        pword = sys.argv[2]
+        db_name = sys.argv[3]
+        DATABASE_URL = "mysql://{}:{}@localhost:3306/{}".format(
+            user, pword, db_name
+        )
+        engine = create_engine(DATABASE_URL)
+        Base.metadata.create_all(engine)
+        session = sessionmaker(bind=engine)()
+        new_state = State(name='Louisiana')
+        session.add(new_state)
+        try:
+            session.flush()
+            session.refresh(new_state)
+            if new_state.id is not None:
+                print('{}'.format(new_state.id))
+        except Exception:
+            session.rollback()
+        finally:
+            session.commit()

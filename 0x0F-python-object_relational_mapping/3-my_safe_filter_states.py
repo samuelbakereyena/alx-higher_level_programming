@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-'''Prints all cities of a given state in a database.
+'''Prints all rows in the states table of a database \
+with a name that matches the given argument and \
+is safe from SQL injection.
 '''
 import sys
 import MySQLdb
@@ -14,15 +16,14 @@ if __name__ == '__main__':
             passwd=sys.argv[2],
             db=sys.argv[3]
         )
-        state_name = sys.argv[4]
         cursor = db_connection.cursor()
+        state_name = sys.argv[4]
         cursor.execute(
-            'SELECT cities.name FROM cities' +
-            ' INNER JOIN states ON cities.state_id = states.id' +
-            ' WHERE CAST(states.name AS BINARY) = %s' +
-            ' ORDER BY cities.id ASC;',
+            'SELECT * FROM states WHERE CAST(name AS BINARY) ' +
+            'LIKE %s ORDER BY id ASC;',
             [state_name]
         )
         results = cursor.fetchall()
-        print(', '.join(map(lambda x: x[0], results)))
+        for result in results:
+            print(result)
         db_connection.close()

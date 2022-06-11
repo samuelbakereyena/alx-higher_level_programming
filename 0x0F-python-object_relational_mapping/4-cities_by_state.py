@@ -1,19 +1,26 @@
 #!/usr/bin/python3
-'''  takes in an argument and displays all values
-in the states table of hbtn_0e_0_usa where name matches the argument'''
+'''Prints all cities and their state in a database.
+'''
+import sys
+import MySQLdb
 
-if __name__ == "__main__":
-    from sys import argv
-    import MySQLdb
-    db = MySQLdb.connect(user=argv[1],
-                         passwd=argv[2],
-                         db=argv[3])
-    cr = db.cursor()
-    cr.execute("SELECT cities.id, cities.name, states.name FROM cities\
-                INNER JOIN states ON cities.state_id = states.id\
-                ORDER BY cities.id")
-    cities = cr.fetchall()
-    for city in cities:
-        print(city)
-    cr.close()
-    db.close()
+
+if __name__ == '__main__':
+    if len(sys.argv) >= 4:
+        db_connection = MySQLdb.connect(
+            host='localhost',
+            port=3306,
+            user=sys.argv[1],
+            passwd=sys.argv[2],
+            db=sys.argv[3]
+        )
+        cursor = db_connection.cursor()
+        cursor.execute(
+            'SELECT cities.id, cities.name, states.name FROM cities' +
+            ' INNER JOIN states ON cities.state_id = states.id' +
+            ' ORDER BY cities.id ASC;'
+        )
+        results = cursor.fetchall()
+        for result in results:
+            print(result)
+        db_connection.close()

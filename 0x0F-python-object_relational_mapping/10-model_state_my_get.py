@@ -1,24 +1,30 @@
 #!/usr/bin/python3
+'''Prints the id of a State object with a given name in a database.
 '''
-lists all State objects from the database hbtn_0e_6_usa
-'''
-
-from sys import argv
+import sys
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from model_state import State
+
+from model_state import Base, State
 
 
-if __name__ == "__main__":
-    engine = create_engine("mysql+mysqldb://{}:{}@localhost/{}"
-                           .format(argv[1], argv[2], argv[3]))
-    InstanceSession = sessionmaker(bind=engine)
-    session = InstanceSession()
-
-    state = session.query(State).filter(
-            State.name == argv[4]).first()
-    if state:
-        print(state.id)
-    else:
-        print('Not Found')
-    session.close()
+if __name__ == '__main__':
+    if len(sys.argv) >= 5:
+        user = sys.argv[1]
+        pword = sys.argv[2]
+        db_name = sys.argv[3]
+        state_name = sys.argv[4]
+        chk = map(lambda x: x.isalpha() or (x in (' ', '%', '_')), state_name)
+        if not all(chk):
+            state_name = ''
+        DATABASE_URL = "mysql://{}:{}@localhost:3306/{}".format(
+            user, pword, db_name
+        )
+        engine = create_engine(DATABASE_URL)
+        Base.metadata.create_all(engine)
+        session = sessionmaker(bind=engine)()
+        result = session.query(State).filter(State.name == state_name).first()
+        if result is not None:
+            print('{}'.format(result.id))
+        else:
+            print('Not found')
