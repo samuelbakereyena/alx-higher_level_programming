@@ -1,8 +1,15 @@
 #!/usr/bin/node
-exports.esrever = function(list){
-	  const newlist = [];
-  for (let i = list.length - 1; i >= 0; i--) {
-    newlist.push(list[i]);
-  }
-  return newlist;
+/**
+ * Reverses an array.
+ * @param {Array} list The array to reverse.
+ * @returns The reversed array.
+ */
+exports.esrever = function (list) {
+  const n = list.length;
+  const reversedList = new Array(n);
+
+  list.forEach((item, i) => {
+    reversedList[n - i - 1] = item;
+  });
+  return reversedList;
 };

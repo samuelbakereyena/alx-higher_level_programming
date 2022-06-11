@@ -1,8 +1,10 @@
 #!/usr/bin/node
-exports.logMe = function (list){
-	if (!this.count) {
-    this.count = 0;
-  }
-  console.log(`${this.count}: ${item}`);
-  this.count++;
+let num = 0;
+/**
+ * Logs a message to the console.
+ * @param {String} item The message to be logged.
+ */
+exports.logMe = function (item) {
+  console.log(num + ': ' + item);
+  num++;
 };

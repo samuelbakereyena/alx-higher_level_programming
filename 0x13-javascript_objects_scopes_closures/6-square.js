@@ -1,16 +1,19 @@
 #!/usr/bin/node
-const Square5 = require('./5-square');
+const SquareParent = require('./5-square');
 
-
-class Square extends Square5 {
+/**
+ * Represents a Rectangle with 4 equal sides.
+ */
+class Square extends SquareParent {
+  /**
+   * Prints this Square with the given character, otherwise 'X'.
+   * @param {String} c The character to print this Square with.
+   */
   charPrint (c) {
-    if (typeof (c) === 'undefined') {
-      c = 'X';
-    }
-
-    for (let i = 0; i < this.height; i++) {
-      console.log(c.repeat(this.width));
-    }
+    const pen = c === undefined ? 'X' : c;
+    const row = new Array(this.width).fill(pen, 0, this.width);
+    const rows = new Array(this.height).fill(row.join(''), 0, this.height);
+    console.log(rows.join('\n'));
   }
 }
 
