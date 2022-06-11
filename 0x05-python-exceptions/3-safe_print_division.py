@@ -1,13 +1,20 @@
 #!/usr/bin/python3
-# 3-safe_print_division.py
-
-
 def safe_print_division(a, b):
-    """Returns the division of a by b."""
+    '''
+    Safely prints the quotient of two integers
+
+    Parameters:
+    a (int): The first integer
+    b (int): The second integer
+
+    Returns:
+    The quotient of the two integers, otherwise None
+    '''
+    res = 0
     try:
-        div = a / b
-    except (TypeError, ZeroDivisionError):
-        div = None
+        res = a / b
+    except Exception:
+        res = None
     finally:
-        print("Inside result: {}".format(div))
-    return (div)
+        print("Inside result: {}".format(res))
+    return res

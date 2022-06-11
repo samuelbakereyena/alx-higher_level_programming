@@ -1,81 +1,73 @@
-# Python - Exceptions
+# Exceptions
 
-In this Folder, There are practice exercises done on errors and exceptions in Python with `try`
-`finally`, `raise`, `except`.
+This project contains some tasks for learning about exceptions in **Python**.
 
+## Tasks To Complete
 
-## Tasks :page_with_curl:
++ [x] 0\. Safe list printing <br/>_**[0-safe_print_list.py](0-safe_print_list.py)**_  contains a function that prints `x` elements of a list.
++ [x] 1\. Safe printing of an integers list <br/>_**[1-safe_print_integer.py](1-safe_print_integer.py)**_  contains a function that prints an integer with `"{:d}".format()`.
++ [x] 2\. Print and count integers <br/>_**[2-safe_print_list_integers.py](2-safe_print_list_integers.py)**_  contains a function that prints the first `x` elements of a list and only integers.
++ [x] 3\. Integers division with debug <br/>_**[3-safe_print_division.py](3-safe_print_division.py)**_  contains a function that divides 2 integers and prints the result.
++ [x] 4\. Divide a list <br/>_**[4-list_division.py](4-list_division.py)**_  contains a function that divides element by element 2 lists.
++ [x] 5\. Raise exception <br/>_**[5-raise_exception.py](5-raise_exception.py)**_  contains a function that raises a type exception.
++ [x] 6\. Raise a message <br/>_**[6-raise_exception_msg.py](6-raise_exception_msg.py)**_  contains a function that raises a name exception with a message.
++ [x] 7\. Safe integer print with error message <br/>_**[100-safe_print_integer_err.py](100-safe_print_integer_err.py)**_  contains a function that prints an integer.
++ [x] 8\. Safe function <br/>_**[101-safe_function.py](101-safe_function.py)**_  contains a function that executes a function safely.
++ [x] 9\. ByteCode -> Python #4 <br/>_**[102-magic_calculation.py](102-magic_calculation.py)**_ contains a Python function `def magic_calculation(a, b):` that does exactly the same as the following Python bytecode:
+  ```c
+  3           0 LOAD_CONST               1 (0)
+              3 STORE_FAST               2 (result)
 
-* **0. Safe list printing**
-  * [0-safe_print_list.py](./0-safe_print_list.py): Python function that prints `x` elements
-  of a list on the same line, followed by a new line.
-  * The parameter `x` represents the number of elements to print - can be
-  bigger than the length of `my_list`.
-  * Returns the real number of elements printed.
-  * Without importing modules or using `len()`.
+  4           6 SETUP_LOOP              94 (to 103)
+              9 LOAD_GLOBAL              0 (range)
+             12 LOAD_CONST               2 (1)
+             15 LOAD_CONST               3 (3)
+             18 CALL_FUNCTION            2 (2 positional, 0 keyword pair)
+             21 GET_ITER
+        >>   22 FOR_ITER                77 (to 102)
+             25 STORE_FAST               3 (i)
 
-* **1. Safe printing of an integers list**
-  * [1-safe_print_integer.py](./1-safe_print_integer.py): Python function that prints an integer in `"{:d}".format()` format.
-  * The parameter `value` can be any type.
-  * Returns `True` if `value` was printed correctly (ie. was an integer),
-  `False` otherwise.
-  * Without importing modules or using `type()`.
+  5          28 SETUP_EXCEPT            49 (to 80)
 
-* **2. Print and count integers**
-  * [2-safe_print_list_integers.py](./2-safe_print_list_integers.py): Python function that prints the first `x` elements of a list that are integers on the same line, followed by a new line.
-  * The parameter `my_list` can contain any type.
-  * The parameter `x` represents the number of elements to print - can be
-  bigger than the length of `my_list`.
-  * Reutnrs the real number of integers printed.
-  * Without importing modules or using `len()`.
+  6          31 LOAD_FAST                3 (i)
+             34 LOAD_FAST                0 (a)
+             37 COMPARE_OP               4 (>)
+             40 POP_JUMP_IF_FALSE       58
 
-* **3. Integers division with debug**
-  * [3-safe_print_division.py](./3-safe_print_division.py): Python function that divides two integers and prints the result using `finally:`.
-  * The function assumes that the arguments are integers.
-  * Upon success, returns the value of the division; otherwise - returns `None`.
-  * Without importing modules.
+  7          43 LOAD_GLOBAL              1 (Exception)
+             46 LOAD_CONST               4 ('Too far')
+             49 CALL_FUNCTION            1 (1 positional, 0 keyword pair)
+             52 RAISE_VARARGS            1
+             55 JUMP_FORWARD            18 (to 76)
 
-* **4. Divide a list**
-  * [4-list_division.py](./4-list_division.py): Python function that divides two lists element by element.
-  * Returns a new list of length `list_length` with all divisions.
-  * The lists `my_list_1` and `my_list_2` can contain any type.
-  * The parameter `list_length` can be larger than the lengths of either list.
-  * If an element is not an integer or float, the function prints `wrong type`.
-  * If the division cannot be done, the result of the division is `0` and the
-  function prints: `division by 0`.
-  * If either of `my_list_1` or `my_list_2` are too short, the function prints:
-  `out of range`.
-  * Without importing modules.
+  9     >>   58 LOAD_FAST                2 (result)
+             61 LOAD_FAST                0 (a)
+             64 LOAD_FAST                1 (b)
+             67 BINARY_POWER
+             68 LOAD_FAST                3 (i)
+             71 BINARY_TRUE_DIVIDE
+             72 INPLACE_ADD
+             73 STORE_FAST               2 (result)
+        >>   76 POP_BLOCK
+             77 JUMP_ABSOLUTE           22
 
-* **5. Raise exception**
-  * [5-raise_exception.py](./5-raise_exception.py): Python function that raises
-  a type exception.
-  * Without importing modules.
+  10    >>   80 POP_TOP
+             81 POP_TOP
+             82 POP_TOP
 
-* **6. Raise a message**
-  * [6-raise_exception_msg.py](./6-raise_exception_msg.py): Python function that raises a
-  name exception with a message.
-  * Without importing modules.
+  11         83 LOAD_FAST                1 (b)
+             86 LOAD_FAST                0 (a)
+             89 BINARY_ADD
+             90 STORE_FAST               2 (result)
 
-* **7. Safe integer print with error message**
-  * [100-safe_print_integer_err.py](./100-safe_print_integer_err.py): Python function that
-  prints an integer with type-checking in `"{:d}".format())` format.
-  * The paramter `value` can be any type.
-  * Returns `True` if `value` was printed correctly (ie. was an integer).
-  * Otherwise, prints an exception error to `stderr` and returns `False`.
-  * Without importing modules.
+  12         93 BREAK_LOOP
+             94 POP_EXCEPT
+             95 JUMP_ABSOLUTE           22
+             98 END_FINALLY
+             99 JUMP_ABSOLUTE           22
+        >>  102 POP_BLOCK
 
-* **8. Safe function**
-  * [101-safe_function.py](./101-safe_function.py): Python function that executes
-  a function safely.
-  * The function assumes that the paramter `fct` is always a pointer to a function.
-  * Upon success, returns the result of the function.
-  * Otherwise, prints an en exception error to `stderr` and returns `None`.
-
-* **9. ByteCode -> Python #4**
-  * [102-magic_calculation.py](./102-magic_calculation.py): Python function matching exactly a
-  bytecode provided by Holberton School.
-
-* **10. CPython #2: PyFloatObject**
-  * [103-python.c](./103-python.c): C functions that print basic information
-  about Python lists, bytes, and float objects.
+  13    >>  103 LOAD_FAST                2 (result)
+            106 RETURN_VALUE
+  ```
++ [x] 10\. CPython #2: PyFloatObject <br/>_**[103-python.c](103-python.c)**_  contains three C functions that print some basic info about Python lists, Python bytes, and Python float objects.
