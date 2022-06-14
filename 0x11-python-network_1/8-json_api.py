@@ -1,21 +1,21 @@
 #!/usr/bin/python3
-"""sends a request to the URL and displays to the x- request-id"""
+"""Sends a search parameter to a URL."""
+import sys
 import requests
-from sys import argv
 
-if __name__ == "__main__":
-    if len(argv) > 1:
-        q = argv[1]
-    else:
-        q = ""
 
+if __name__ == '__main__':
+    url = 'http://0.0.0.0:5000/search_user'
+    query = sys.argv[1] if len(sys.argv) > 1 else ""
+    # if len(query) > 0 and not query[0].isalpha():
+    #     query = ""
+    form_data = [('q', query)]
+    response = requests.post(url, data=form_data)
     try:
-        _data = {'q': q}
-        url = 'http://0.0.0.0:5000/search_user'
-        req = requests.post(url, _data).json()
-        if not req:
-            print("No result")
+        json_content = response.json()
+        if json_content:
+            print('[{}] {}'.format(json_content['id'], json_content['name']))
         else:
-            print("[{}] {}".format(req.get('id'), req.get('name')))
-    except ValueError:
-        print("Not a valid JSON")
+            print('No result')
+    except Exception:
+        print('Not a valid JSON')

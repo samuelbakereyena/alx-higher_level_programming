@@ -1,14 +1,13 @@
 #!/usr/bin/python3
-"""
-a Python script that fetches https://intranet.hbtn.io/status
-"""
-import urllib.request
+"""Sends a form data to a URL."""
+import sys
+from urllib import request, parse
 
 
-if __name__ == "__main__":
-    with urllib.request.urlopen('https://intranet.hbtn.io/status') as response:
-        html = response.read()
-        print("Body response:")
-        print("\t- type: {}".format(type(html)))
-        print("\t- content: {}".format(html))
-        print("\t- utf8 content: {}".format(html.decode("UTF-8")))
+if __name__ == '__main__':
+    if len(sys.argv) > 2:
+        url = sys.argv[1]
+        email = sys.argv[2]
+        form_data = bytes(parse.urlencode([('email', email)]), 'utf-8')
+        with request.urlopen(sys.argv[1], data=form_data) as response:
+            print(response.read().decode('utf-8'))

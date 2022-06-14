@@ -1,11 +1,14 @@
 #!/usr/bin/python3
-"""s takes in URL and an email address, sends a POST request to the passed URL"""
+"""Sends a request to a URL and prints its response or error code."""
+import sys
 import requests
-from sys import argv
 
-if __name__ == "__main__":
-    req = requests.get(argv[1])
-    if req.status_code >= 400:
-        print('Error code: {}'.format(req.status_code))
-    else:
-        print(req.text)
+
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        url = sys.argv[1]
+        response = requests.get(url)
+        if response.status_code >= 400:
+            print('Error code: {}'.format(response.status_code))
+        else:
+            print(response.text)

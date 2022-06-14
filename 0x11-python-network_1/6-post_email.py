@@ -1,12 +1,13 @@
 #!/usr/bin/python3
-
-"""s takes i n a URL and an email address"""
+"""Sends a form data to a URL."""
+import sys
 import requests
 
-from sys import argv
 
-
-if __name__ == "__main__":
-    values = {'email': argv[2]}
-    req = requests.post(argv[1], data=values)
-    print(req.text)
+if __name__ == '__main__':
+    if len(sys.argv) > 2:
+        url = sys.argv[1]
+        email = sys.argv[2]
+        form_data = [('email', email)]
+        response = requests.post(url, data=form_data)
+        print(response.text)

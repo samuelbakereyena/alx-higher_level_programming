@@ -1,12 +1,12 @@
 #!/usr/bin/python3
-"""sends a request to the URL AND VALUE OF THE x- rEQUEST-iD"""
-    import requests
+"""Fetches a header of a response from a URL."""
 import sys
+import requests
 
 
-if __name__ == "__main__":
-    try:
-        response = requests.get(sys.argv[1])
-        print(response.headers.get('X-Request-Id'))
-    except:
-        pass
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        url = sys.argv[1]
+        response = requests.get(url)
+        if 'X-Request-Id' in response.headers:
+            print(response.headers['X-Request-Id'])
